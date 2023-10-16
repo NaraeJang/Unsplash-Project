@@ -1,4 +1,17 @@
+import { AppProvider } from "./Context";
+import Gallery from "./Gallery";
+import SearchForm from "./SearchForm";
+import ThemeToggle from "./ThemeToggle";
+
 const App = () => {
-  return <h1>Unsplash Images Starter</h1>;
+  return (
+    <main>
+      <AppProvider>
+        <ThemeToggle />
+        <SearchForm />
+        <Gallery />
+      </AppProvider>
+    </main>
+  );
 };
 export default App;
