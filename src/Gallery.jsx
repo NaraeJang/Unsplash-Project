@@ -1,9 +1,22 @@
-import { useFetchUnsplash } from "./reactQueryCustomHooks";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useGlobalContext } from "./Context";
+
+const url =
+  "https://api.unsplash.com/search/photos?client_id=PzjUX06Q73fjaJjeGRjA8P2ibd1ti9IeJd87-462u8s";
 
 const Gallery = () => {
-  const { data, isLoading, isError } = useFetchUnsplash();
+  const { searchTerm, setSearchTerm } = useGlobalContext();
 
-  if (isLoading) {
+  const response = useQuery({
+    queryKey: ["images"],
+    queryFn: async () => {
+      const result = await axios.get(`${url}&query=${searchTerm}`);
+      return result.data;
+    },
+  });
+
+  if (response.isLoading) {
     return (
       <section className="image-container">
         <div className="loading"></div>
@@ -11,7 +24,7 @@ const Gallery = () => {
     );
   }
 
-  if (isError) {
+  if (response.isError) {
     return (
       <section className="image-container">
         <h4>There was an error...</h4>
@@ -19,7 +32,7 @@ const Gallery = () => {
     );
   }
 
-  if (data.length < 1) {
+  if (response.data.results.length < 1) {
     return (
       <section className="image-container">
         <h4>No Results Found...</h4>
@@ -29,7 +42,7 @@ const Gallery = () => {
 
   return (
     <section className="image-container">
-      {data.results.map((item) => {
+      {response.data.results.map((item) => {
         const url = item?.urls?.regular;
         return (
           <img

@@ -1,15 +1,14 @@
-import { useSearchUnsplash } from "./reactQueryCustomHooks";
+import { useGlobalContext } from "./Context";
 
 const SearchForm = () => {
+  const { searchTerm, setSearchTerm } = useGlobalContext();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const searchValue = e.target.elements.search.value;
-    console.log(searchValue);
-    if (!searchValue) return;
 
-    const { searchUnsplash } = useSearchUnsplash();
-    searchUnsplash(searchValue);
-    console.log(searchValue);
+    if (!searchValue) return;
+    setSearchTerm(searchValue);
   };
 
   return (
