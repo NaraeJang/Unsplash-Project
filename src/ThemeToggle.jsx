@@ -5,7 +5,7 @@ const ThemeToggle = () => {
   const { isDarkTheme, toggleDarkTheme } = useGlobalContext();
 
   return (
-    <section const="toggle-container">
+    <section className="toggle-container">
       <button className="dark-toggle" onClick={() => toggleDarkTheme()}>
         {isDarkTheme ? (
           <BsFillSunFill className="toggle-icon" />
