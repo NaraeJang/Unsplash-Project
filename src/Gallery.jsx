@@ -4,19 +4,43 @@ const Gallery = () => {
   const { data, isLoading, isError } = useFetchUnsplash();
 
   if (isLoading) {
-    return <div className="loading"></div>;
+    return (
+      <section className="image-container">
+        <div className="loading"></div>
+      </section>
+    );
   }
+
+  if (isError) {
+    return (
+      <section className="image-container">
+        <h4>There was an error...</h4>
+      </section>
+    );
+  }
+
+  if (data.length < 1) {
+    return (
+      <section className="image-container">
+        <h4>No Results Found...</h4>
+      </section>
+    );
+  }
+
   return (
-    <div>
-      {data.map((item) => {
+    <section className="image-container">
+      {data.results.map((item) => {
+        const url = item?.urls?.regular;
         return (
-          <div key={item.id}>
-            <img src={item.urls.regular} />
-            <h4>{item.alt_description}</h4>
-          </div>
+          <img
+            key={item.id}
+            src={url}
+            alt={item.alt_description}
+            className="img"
+          />
         );
       })}
-    </div>
+    </section>
   );
 };
 export default Gallery;
