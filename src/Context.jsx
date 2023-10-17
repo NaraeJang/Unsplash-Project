@@ -9,10 +9,9 @@ export const AppProvider = ({ children }) => {
     const newDarkTheme = !isDarkTheme;
     setIsDarkTheme(newDarkTheme);
 
-    const body = document.querySelector("body");
-
-    body.classList.toggle("dark-theme", isDarkTheme);
+    document.body.classList.toggle("dark-theme", newDarkTheme);
   };
+
   return (
     <AppContext.Provider
       value={{ isDarkTheme, setIsDarkTheme, toggleDarkTheme }}>
